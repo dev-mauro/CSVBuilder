@@ -1,0 +1,93 @@
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+  text-align: center;
+}
+
+td:first-child, th:first-child {
+  padding-left: 20px;
+  text-align: left;
+}
+
+td:last-child label:hover {
+  cursor: pointer;
+}
+
+tr.saved {
+  background-color: rgb(209, 243, 209);
+}
+
+tr:hover {
+  background-color: #d6d6d6;
+}
+
+thead tr {
+  background-color: rgb(233, 233, 233);
+}
+thead tr:hover {
+  background-color: rgb(233, 233, 233);
+}
+
+tr.selected {
+  background-color: yellow;
+}
+
+tr.selected:hover {
+  background-color: rgb(235, 235, 3);
+}
+
+.imei-tableContainer {
+  position: fixed;
+  top: calc(50vh - 350px);
+  left: calc(50vw - 150px);
+  border: 5px solid rgb(5, 5, 116);;
+  padding: 3px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 50px rgb(167, 167, 167);
+}
+
+.imei-tableContainer div {
+  width: 100%;
+  max-height: 500px;
+  overflow-y: scroll;
+}
+
+.imei-tableContainer div td {
+  width: 300px;
+}
+
+.imei-tableContainer table {
+  width: 300px;
+  background-color: white;
+}
+
+.imei-tableContainer thead{
+  background-color: rgb(5, 5, 116);
+  color: white;
+}
+
+.imei-tableContainer tr:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.imei-tableContainer button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: rgb(5, 5, 116);
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
+  position: absolute;
+  top: -20px;
+  right: -20px;
+}
