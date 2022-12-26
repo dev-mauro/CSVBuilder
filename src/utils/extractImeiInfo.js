@@ -1,18 +1,19 @@
 const extractImeiInfo = (info) => {
   
   // Crea un array de equipos a partir del string
-  const infoArray = buildDeviceInfoArray(info);
+  const {validIMEI, invalidIMEI} = buildDeviceInfoArray(info);
 
   // Agrupa los imei por modelo a partir del array
-  const groupedDevices = groupDevicesByModel(infoArray);
+  const devices = groupDevicesByModel(validIMEI);
 
-  return groupedDevices;
+  return {devices, invalidIMEI};
 
 }
 
 // Construye un array con la información de los equipos a partir de un string
 const buildDeviceInfoArray = (info) => {
-  const result = [];
+  const validIMEI = [];
+  const invalidIMEI = [];
 
   info = info.replaceAll('-', '');
 
@@ -23,17 +24,30 @@ const buildDeviceInfoArray = (info) => {
 
     const deviceInfo = device.split('\t');
 
-    if(deviceInfo.length == 4)
-      deviceInfo[2] = `${deviceInfo[3]} ${deviceInfo[2]}`
+    let [imei1, imei2, model, brand] = deviceInfo;
 
-    result.push({
-      imei1: deviceInfo[0],
-      imei2: deviceInfo[1],
-      model: deviceInfo[2]
-    })
+    if(brand)
+      model = brand + " " + model;
+
+    if(!isValidIMEI(imei1)){
+      invalidIMEI.push({imei: imei1, model});
+      imei1 = '';
+    }
+
+    if(!isValidIMEI(imei2)){
+      invalidIMEI.push({imei: imei2, model});
+      imei2 = '';
+    }
+
+    if(imei1 || imei2)
+      validIMEI.push({
+        imei1,
+        imei2,
+        model
+      })
   })
 
-  return result;
+  return {validIMEI, invalidIMEI};
 }
 
 
@@ -76,6 +90,13 @@ const formatString = (string) => {
   string = string.replaceAll("    ", " ");
 
   return string;
+}
+
+const isValidIMEI = (imei) => {
+  if(isNaN(imei) || (imei.length != 15 && imei.length != 0))
+    return false;
+
+  return true;
 }
 
 /*

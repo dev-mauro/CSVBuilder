@@ -7,17 +7,17 @@ import setSortedDevices from "../utils/setSavedDevices";
 import { sortSavedDevices } from "../utils/sortDevices";
 
 export const SaveDevices = () => {
-
   const { devices, setDevices } = useContext(InfoContext);
   const download = useDownload();
   const {onInputChange, fileName} = useForm();
-  const [fixed, setFixed] = useState("")
 
   const input = useRef();
 
   const onButtonClick = () => {
     // Obtiene array con los dispositivos marcados
     const selectedDevices = devices.filter(device => device.selected);
+
+    if(selectedDevices.length == 0) return;
 
     // Genera un unico objeto con todos los IMEI de los dispositivos seleccionados
     const unifiedList = selectedDevices
@@ -41,23 +41,10 @@ export const SaveDevices = () => {
   const onInputClick = () => {
     input.current.select();
   }
-
-  useLayoutEffect(() => {
-    const wHeight = window.innerHeight;
-    const bHeight = document.body.clientHeight;
-
-    if(bHeight > wHeight){
-      if(fixed == "") setFixed("fixed");
-      return;
-    }
-
-    if(fixed == "fixed") setFixed("");
-
-  });
   
 
   return (
-    <div style={{width: '100%', margin: '10px auto 0', maxWidth: '800px'}} className={fixed}>
+    <div style={{width: '100%', margin: '10px auto 0', maxWidth: '800px'}} className="fixed">
 
       <form action="" onSubmit={onFormSubmit}>
         <input 

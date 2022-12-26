@@ -13,6 +13,8 @@ export const InfoProvider = ({children}) => {
   // { model: "", imeiList: [ 13123,123123, 123123 ], saved: false, selected: false}
   const [devices, setDevices] = useState([]);
 
+  const [invalidIMEI, setInvalidIMEI] = useState([])
+
   // Cambia el estado de selección de los embarques de equipos
   const onSelectedChange = (model) => {
     const devicesCopy = [...devices];
@@ -26,24 +28,25 @@ export const InfoProvider = ({children}) => {
     setDevices(devicesCopy);
   }
 
-  useEffect(() => {
-    const { imei } = value;
+  const onSetImei = (imeiInfo) => {
+    setImei(imeiInfo);
 
-    if( !imei ) return;
+    if( !imeiInfo ) return;
 
-    const devices = extractImeiInfo(imei);
+    const {devices, invalidIMEI} = extractImeiInfo(imeiInfo);
 
     sortDevicesByModel(devices);
 
     setDevices(devices);
-
-  }, [imei]);
+    setInvalidIMEI(invalidIMEI);
+  }
   
 
   const value = {
-    imei, setImei,
+    imei, onSetImei,
     devices, setDevices,
     onSelectedChange,
+    invalidIMEI,
   }
 
   return (

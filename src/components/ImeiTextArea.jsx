@@ -1,4 +1,4 @@
-import { createRef, useContext } from "react"
+import { createRef, memo, useContext } from "react"
 import { InfoContext } from "../context/InfoContext"
 
 const containerStyle = {
@@ -21,14 +21,13 @@ const buttonStyle = {
   height: '50px',
 }
 
-export const ImeiTextArea = () => {
-
-  const { setImei } = useContext( InfoContext );
+export const ImeiTextArea = memo(() => {
+  const { onSetImei } = useContext( InfoContext );
   const textRef = createRef();
 
   const onButtonClick = () => {
     const info = textRef.current.value;
-    setImei(info);
+    onSetImei(info);
   }
 
   return (
@@ -46,4 +45,4 @@ export const ImeiTextArea = () => {
       > Revisar </button>
     </div>
   )
-}
+})
