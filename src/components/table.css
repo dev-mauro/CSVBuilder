@@ -67,7 +67,13 @@ tr.selected:hover {
   background-color: white;
 }
 
-.imei-tableContainer thead{
+.imei-tableContainer thead tr{
+  background-color: rgb(5, 5, 116);
+  color: white;
+  text-align: center;
+}
+
+.imei-tableContainer thead tr:hover {
   background-color: rgb(5, 5, 116);
   color: white;
 }

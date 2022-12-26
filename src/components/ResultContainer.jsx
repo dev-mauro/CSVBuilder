@@ -23,7 +23,7 @@ export const ResultContainer = () => {
             <th>Modelo</th>
             <th>Cantidad</th>
             <th>Guardado</th>
-            <th>Seleccinado</th>
+            <th>Seleccionado</th>
           </tr>
         </thead>
         <tbody>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 
 import getDevicesNames from "../helpers/getDevicesNames"
 
@@ -7,7 +7,7 @@ const getTableRows = ({abr, names}) => {
 
   for(let i in abr) {
     tableRowList.push(
-      <tr>
+      <tr key={abr[i]}>
         <td>{names[i]}</td>
         <td>{abr[i]}</td>
       </tr>
@@ -17,7 +17,7 @@ const getTableRows = ({abr, names}) => {
   return tableRowList.map(e => e);
 }
 
-export const DisplayFilesName = () => {
+export const DisplayFilesName = memo(() => {
   const [visible, setVisible] = useState(false);
   const [filesName, setFilesName] = useState({abr: [], names: []});
 
@@ -57,5 +57,5 @@ export const DisplayFilesName = () => {
 
     </div>
   )
-}
+})
 
