@@ -44,7 +44,7 @@ tr.selected:hover {
 
 .imei-tableContainer {
   position: fixed;
-  top: calc(50vh - 350px);
+  top: 30px;
   left: calc(50vw - 150px);
   border: 5px solid rgb(5, 5, 116);;
   padding: 3px;

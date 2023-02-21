@@ -6,10 +6,9 @@ import { useForm } from "../hook/useForm";
 import setSortedDevices from "../utils/setSavedDevices";
 import { sortSavedDevices } from "../utils/sortDevices";
 
-export const SaveDevices = () => {
+export const SaveDevices = ({onInputChange, fileName}) => {
   const { devices, setDevices } = useContext(InfoContext);
   const download = useDownload();
-  const {onInputChange, fileName} = useForm();
 
   const input = useRef();
 

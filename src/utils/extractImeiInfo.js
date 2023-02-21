@@ -24,27 +24,32 @@ const buildDeviceInfoArray = (info) => {
 
     const deviceInfo = device.split('\t');
 
-    let [imei1, imei2, model, brand] = deviceInfo;
+    let {imei1, imei2, model, brand} = detectInfoStructure(deviceInfo);
+
+    imei1 = removeWhiteSpaces(imei1);
+    imei2 = removeWhiteSpaces(imei2);
 
     if(brand)
-      model = brand + " " + model;
+      model = brand + " - " + model;
 
-    if(!isValidIMEI(imei1)){
-      invalidIMEI.push({imei: imei1, model});
-      imei1 = '';
-    }
+    const imeiList = [];
+    
+    if(imei1.length != 0)
+      isValidIMEI(imei1)
+      ? imeiList.push(imei1)
+      : invalidIMEI.push({imei: imei1, model});
 
-    if(!isValidIMEI(imei2)){
-      invalidIMEI.push({imei: imei2, model});
-      imei2 = '';
-    }
+    if(imei2.length != 0)
+      isValidIMEI(imei2)
+      ? imeiList.push(imei2)
+      : invalidIMEI.push({imei: imei2, model});
 
-    if(imei1 || imei2)
+    if(imeiList.length > 0)
       validIMEI.push({
-        imei1,
-        imei2,
+        imeiList,
         model
       })
+    
   })
 
   return {validIMEI, invalidIMEI};
@@ -58,25 +63,18 @@ const groupDevicesByModel = (deviceArray) => {
     const index = result.findIndex( e => e.model.replaceAll(' ', '') === formatString(device.model).replaceAll(' ', '') )
 
     // No existe registro de ese modelo en resultado, se crea el registro
-    if( index === -1 ) {
-
+    if( index === -1 )
       result.push({
         model: formatString(device.model),
-        imeiList: device.imei2 != ""
-          ? [device.imei1, device.imei2]
-          : [device.imei1],
+        imeiList: device.imeiList,
         saved: false,
         selected: false,
       });
 
     // Si existe registro, se añaden los imei a la lista
-    } else {
+    else 
+      result[index].imeiList = [...result[index].imeiList, ...device.imeiList]; 
 
-      result[index].imeiList.push(device.imei1);
-      (device.imei2 != "")
-        ? result[index].imeiList.push(device.imei2)
-        : "";
-    }
   })
 
   return result;
@@ -92,11 +90,47 @@ const formatString = (string) => {
   return string;
 }
 
+const removeWhiteSpaces = (string) => {
+  return string.replaceAll(' ', '');
+}
+
 const isValidIMEI = (imei) => {
   if(isNaN(imei) || (imei.length != 15 && imei.length != 0))
     return false;
 
   return true;
+}
+
+// A partir de un array con 2 imei, marca y modelo: Determinar cual dato corresponde a cada cosa
+const detectInfoStructure = (deviceArray) => {
+  // Si el primer dato es un numero, los dos primeros elementos corresponden a los IMEI
+  if(isNumber(deviceArray[0].replaceAll(' ', '')))
+    return {
+      imei1: deviceArray[0],
+      imei2: deviceArray[1],
+      model: deviceArray[2],
+      brand: deviceArray[3],
+    }
+
+  /*
+  si hay menos de 4 datos, se le entrega a brand el valor del indice -1, para que sea indeterminado
+  Esto abre la posibilidad a usar datos tanto con marca y modelo por separado, como juntos
+  EJ:
+  [samsung, a01, 123123, 123123] --> caso 4 elementos
+  [galaxy a01, 123123, 123123] --> caso 3 elementos
+  */
+  const i = (deviceArray.length == 4) ? 0 : -1;
+
+  return {
+    brand: deviceArray[i],
+    model: deviceArray[i + 1],
+    imei1: deviceArray[i + 2],
+    imei2: deviceArray[i + 3],
+  }
+}
+
+const isNumber = (data) => {
+  return !isNaN(data);
 }
 
 /*

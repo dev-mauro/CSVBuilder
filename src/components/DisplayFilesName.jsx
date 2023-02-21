@@ -2,25 +2,29 @@ import { memo, useEffect, useState } from "react"
 
 import getDevicesNames from "../helpers/getDevicesNames"
 
-const getTableRows = ({abr, names}) => {
-  const tableRowList = [];
-
-  for(let i in abr) {
-    tableRowList.push(
-      <tr key={abr[i]}>
-        <td>{names[i]}</td>
-        <td>{abr[i]}</td>
-      </tr>
-    );
-  }
-
-  return tableRowList.map(e => e);
-}
-
-export const DisplayFilesName = memo(() => {
+export const DisplayFilesName = memo(({setFormState}) => {
   const [visible, setVisible] = useState(false);
   const [filesName, setFilesName] = useState({abr: [], names: []});
 
+  const getTableRows = ({abr, names}) => {
+    const tableRowList = [];
+  
+    for(let i in abr) {
+      tableRowList.push(
+        <tr key={abr[i]}>
+          <td>{names[i]}</td>
+          <td
+            style={{cursor: 'pointer'}}
+            onClick={() => setFormState( {fileName: abr[i]} )}
+          >
+            {abr[i]}
+          </td>
+        </tr>
+      );
+    }
+  
+    return tableRowList.map(e => e);
+  }
 
   useEffect(() => {
     getDevicesNames().then((resp) => {
