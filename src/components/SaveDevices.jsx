@@ -6,13 +6,22 @@ import { useForm } from "../hook/useForm";
 import setSortedDevices from "../utils/setSavedDevices";
 import { sortSavedDevices } from "../utils/sortDevices";
 
-export const SaveDevices = ({onInputChange, fileName}) => {
-  const { devices, setDevices } = useContext(InfoContext);
-  const download = useDownload();
+export const SaveDevices = ( ) => {
+  const { devices, setDevices, onInputChange, fileName } = useContext(InfoContext);
+  const download = useDownload('.csv');
+
+  const [ fixed, setFixed ] = useState( false );
+
+  const [ noNameFileTry, setNoNameFileTry ] = useState( false );
 
   const input = useRef();
 
   const onButtonClick = () => {
+    if( fileName === undefined ) {
+      setNoNameFileTry( true );
+      return;
+    }
+
     // Obtiene array con los dispositivos marcados
     const selectedDevices = devices.filter(device => device.selected);
 
@@ -31,6 +40,7 @@ export const SaveDevices = ({onInputChange, fileName}) => {
     sortSavedDevices(devicesCopy);
     // Setea el array con los cambios realizados
     setDevices(devicesCopy);
+    setNoNameFileTry( false );
   }
 
   const onFormSubmit = (e) => {
@@ -43,13 +53,21 @@ export const SaveDevices = ({onInputChange, fileName}) => {
   
 
   return (
-    <div style={{width: '100%', margin: '10px auto 0', maxWidth: '800px'}} className="fixed">
+    <div className={`save-devices ${(fixed) ? 'fixed' : ''}`}>
 
       <form action="" onSubmit={onFormSubmit}>
+        <button
+          className="toggle-fixed-button"
+          onClick={() => setFixed( !fixed )}
+        >
+          { (fixed) ? '🔻' : '🔺' }
+        </button>
+
         <input 
+          className={`${(noNameFileTry) ? 'no-name-file-try' : ''}`}
           type="text"
-          style={{width: 'calc(100% - 100px)', height: '25px', textAlign: 'right', paddingRight: '10px'}}
           value={fileName}
+          placeholder="Nombre del archivo..."
           name={"fileName"}
           onChange={onInputChange}
           ref={input}
@@ -58,8 +76,8 @@ export const SaveDevices = ({onInputChange, fileName}) => {
         />
 
         <button
-          onClick={onButtonClick}
-          style={{width: '100px', height: '25px'}}
+          className="save-button"
+          onClick={ onButtonClick }
         >
           Guardar
         </button>

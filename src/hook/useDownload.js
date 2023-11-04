@@ -1,14 +1,17 @@
+import { getBotInfoFiles } from "../utils/getBotInfoFiles";
 import getCSV from "../utils/getCSV"
 
-export const useDownload = () => {
+export const useDownload = ( extension = '' ) => {
 
-  const download = (data, fileName) => {
-    const file = getCSV(data);
+  const fileGeneratorFunction = ( extension == '.csv' ) ? getCSV : getBotInfoFiles;
+
+  const download = ( data, fileName ) => {
+    const file = fileGeneratorFunction(data);
 
     const link = document.createElement("a")
 
     link.href = file;
-    link.download = `${fileName}.csv`;
+    link.download = `${fileName}${extension}`;
 
     document.body.appendChild(link);
     link.click();

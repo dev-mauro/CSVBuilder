@@ -1,30 +1,38 @@
-import { ImeiTextArea, ResultContainer } from './components';
+import { ImeiTextArea, ResultContainer, LogInButton } from './components';
 import { SaveDevices } from './components/SaveDevices';
-import { DisplayFilesName } from './components/DisplayFilesName';
 import { InvalidImeiContainer } from './components/InvalidImeiContainer';
-import { useForm } from './hook/useForm';
 
-const containerStyle = {
-  padding: '10px',
-  position: 'relative'
-}
+import { useEffect, useState } from 'react';
+import { useCheckCredentials } from './hook/useCheckCredentials';
+import { AuthButton } from './components/AuthButton';
+import { PrivateComponents } from './components/PrivateComponents';
+import { checkAllowedEmail } from './helpers/checkAllowedEmail';
+import { LogOutButton } from './components/LogOutButton';
+import { AUTH } from './utils/constants';
+
 
 function App() {
 
-  const { onInputChange, fileName, setFormState } = useForm();
+  const { user } = useCheckCredentials();
+  const [ authorized, setAuthorized ] = useState( false );
+
+  useEffect(() => {
+    checkAllowedEmail( user.email )
+      .then( authorized => setAuthorized( authorized ));
+  }, [ user ])
 
   return (
-    <div style={ containerStyle }>
+    <div className="app">
+      <AuthButton user={ user }/>
       <ImeiTextArea />
       <InvalidImeiContainer/>
       <ResultContainer />
-      <SaveDevices
-        onInputChange={onInputChange}
-        fileName={fileName}
-      />
-      <DisplayFilesName 
-        setFormState={setFormState}
-      />
+      <SaveDevices/>
+      
+      <div className="footer">
+        { ( user.authState === AUTH.authenticated ) ? <LogOutButton/> : '' }
+        { ( authorized ) ? <PrivateComponents/> : '' }
+      </div>
     </div>
   )
 }

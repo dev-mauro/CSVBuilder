@@ -1,8 +1,11 @@
-import { memo, useEffect, useState } from "react"
+import { memo, useContext, useEffect, useState } from "react"
 
-import getDevicesNames from "../helpers/getDevicesNames"
+import { InfoContext } from "../context/InfoContext";
+import { getCerts } from "../helpers/getCerts";
 
-export const DisplayFilesName = memo(({setFormState}) => {
+export const DisplayFilesName = memo(() => {
+  const { setFormState } = useContext( InfoContext );
+
   const [visible, setVisible] = useState(false);
   const [filesName, setFilesName] = useState({abr: [], names: []});
 
@@ -27,9 +30,12 @@ export const DisplayFilesName = memo(({setFormState}) => {
   }
 
   useEffect(() => {
-    getDevicesNames().then((resp) => {
-      const abr = Object.keys(resp.content);
-      const names = Object.values(resp.content);
+    getCerts().then((resp) => {
+      // nombres de modelos
+      const names = resp.map(e => e.modelo);
+
+      // nombres de modelos abreviados (nombre archivo)
+      const abr = resp.map(e => e.modelo_abr);
 
       setFilesName({abr, names});
     });
@@ -37,10 +43,12 @@ export const DisplayFilesName = memo(({setFormState}) => {
   
 
   return (
-    <div style={{position: 'fixed', top: '10px', right: '5px', display: 'flex', flexDirection: 'column', border: '3px solid black'}}>
+    <div
+      className="display-filesNames"
+    >
       <button
+        className="button"
         onClick={() => setVisible(!visible)}
-        style={{minWidth: '40px', height: '40px', cursor: 'pointer'}}
       >🔎</button>
 
       <div className="namesTable__container">

@@ -3,8 +3,36 @@ import { InfoContext } from "./InfoContext";
 
 import extractImeiInfo from "../utils/extractImeiInfo";
 import { sortDevicesByModel } from "../utils/sortDevices";
+import { useForm } from "../hook/useForm";
+
+import { AUTH } from "../utils/constants";
+import { logoutUser, signInWithGoogle } from "../firebase";
 
 export const InfoProvider = ({children}) => {
+
+  // Usuario logueado
+  const [ user, setUser ] = useState({
+    authState: AUTH.checking, // 'cheking', 'authenticated', 'not-authenticated'
+    email: null,
+    photoURL: null,
+    displayName: null,
+  });
+
+  // Acción LogIn con Google usando Firebase
+  const onLogIn = async () => {
+    const { ok, result } = await signInWithGoogle();
+
+    if( !ok )
+      console.log('Error al iniciar sesión')
+  }
+
+  // Acción LogOut usando Firebase
+  const onLogOut = async () => {
+    const { ok } = await logoutUser();
+
+    if ( !ok )
+      console.log('Error al cerrar sesión')
+  }
 
   // Lista de IMEI escritos en el TextBlock. String.
   const [imei, setImei] = useState();
@@ -13,7 +41,10 @@ export const InfoProvider = ({children}) => {
   // { model: "", imeiList: [ 13123,123123, 123123 ], saved: false, selected: false}
   const [devices, setDevices] = useState([]);
 
-  const [invalidIMEI, setInvalidIMEI] = useState([])
+  const [invalidIMEI, setInvalidIMEI] = useState([]);
+
+  // Estado del input para poner nombre al archivo 
+  const { onInputChange, fileName, setFormState } = useForm();
 
   // Cambia el estado de selección de los embarques de equipos
   const onSelectedChange = (model) => {
@@ -43,10 +74,12 @@ export const InfoProvider = ({children}) => {
   
 
   const value = {
+    user, setUser, onLogIn, onLogOut,
     imei, onSetImei,
     devices, setDevices,
     onSelectedChange,
     invalidIMEI,
+    onInputChange, fileName, setFormState
   }
 
   return (

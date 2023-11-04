@@ -14,9 +14,7 @@ export const ResultContainer = () => {
   const [popupInfo, setPopupInfo] = useState({model: "", imeiList: [], visible: false});
 
   return (
-    <div style={{maxWidth: '800px', margin: '50px auto 0'}}>
-      <h1 style={{textAlign: 'center', marginBottom: '10px'}}>Resultado</h1>
-
+    <div className="result-container">
       <table>
         <thead>
           <tr>

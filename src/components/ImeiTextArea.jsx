@@ -1,25 +1,7 @@
 import { createRef, memo, useContext } from "react"
 import { InfoContext } from "../context/InfoContext"
 
-const containerStyle = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
-  gap: '10px',
-  width: '500px',
-  margin: '0 auto'
-}
 
-const textAreaStyle = {
-  width: '500px',
-  height: '400px',
-  resize: 'vertical',
-}
-
-const buttonStyle = {
-  width: '150px',
-  height: '50px',
-}
 
 export const ImeiTextArea = memo(() => {
   const { onSetImei } = useContext( InfoContext );
@@ -31,16 +13,17 @@ export const ImeiTextArea = memo(() => {
   }
 
   return (
-    <div style={ containerStyle }>
+    <div
+      className="imei-textArea__container" 
+    >
       <textarea
         ref={textRef}
         type="text"
         className="imei-input"
         autoCapitalize="none"
-        style={ textAreaStyle }
       />
       <button
-        style={ buttonStyle }
+      className="button"
         onClick={onButtonClick}
       > Revisar </button>
     </div>
