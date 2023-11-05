@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, orderBy, query } from "firebase/firestore/lite";
 
 import { db } from "../firebase";
 
@@ -6,7 +6,8 @@ import { db } from "../firebase";
 // => [{ numero, modelo, modelo_abr }, ...]
 const getCerts = async () => {
 
-  const collectionRef = collection( db, 'certificados');
+  const collectionRef = query(collection(db, 'certificados'), orderBy('modelo'));
+
   const certsQuery = await getDocs( collectionRef );
 
   const certs = certsQuery.docs.map( (doc) => {

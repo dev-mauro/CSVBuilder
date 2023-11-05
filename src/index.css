@@ -8,10 +8,10 @@
 body {
   background-color: #23262e;
   color: white;
+  position: relative;
 }
 
 .app {
-  position: relative;
   min-height: 100vh;
   max-width: 1100px;
   margin: 0 auto;
@@ -57,7 +57,7 @@ body {
   border-radius: 50px;
   padding: 0 40px 0 10px;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .user-badge img {
@@ -212,4 +212,154 @@ body {
 .imei-textArea__container button {
   width: 150px;
   height: 50px;
+}
+
+.adm-certs__button {
+  background-color: transparent;
+  color: #76829e;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 1px solid #76829e;
+  margin-bottom: 10px;
+}
+
+.adm-certs__button:hover {
+  cursor: pointer;
+  color: #a6b0c3;
+}
+
+.cert-manage__container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0,0,0, .7);
+  z-index: 1;
+
+  display: grid;
+  place-items: center;
+}
+
+.cert-manage__container.hidden {
+  display: none;
+}
+
+.cert-manage {
+  width: 100%;
+  max-width: 1000px;
+  background-color: #23262e;
+  padding: 20px;
+  border-radius: 5px;
+  position: relative;
+}
+
+.cert-manage h2 {
+  /* margin-bottom: 20px; */
+  text-align: center;
+}
+
+.cert-manage h3 {
+  margin: 20px 0 0px;
+  font-weight: normal;
+  color: rgb(182, 182, 182);
+}
+
+.cert-manage .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  background-color: transparent;
+  border: none;
+  color: rgb(182, 182, 182);
+  font-size: 20px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  transition: border 0.3s ease-in-out;
+}
+
+.cert-manage .close-button:hover {
+  cursor: pointer;
+  border: 1px solid #434a5a;
+}
+
+.add-cert__container {
+  padding: 20px 10px;
+}
+
+.add-cert__form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+}
+
+.add-cert__form label {
+  margin: 10px 0 5px;
+  font-style: italic;
+}
+
+.add-cert__form input {
+  background-color: #0a0b0e;
+  outline: none;
+  border: none;
+  padding: 10px;
+  padding-left: 12px;
+  color: white;
+  border-radius: 5px;
+}
+
+.add-cert__form button {
+  margin-top: 10px;
+}
+
+.add-result {
+  margin: 10px 0 0;
+  font-size: 14px;
+  text-align: center;
+  max-width: 300px;
+}
+
+.add-result.success {
+  color: rgb(0, 255, 0);
+}
+
+.add-result.error {
+  color: rgb(255, 255, 0);
+}
+
+
+.invalid-imei__container {
+  width: 500px;
+  margin: 0 auto;
+  padding: 10px;
+  background-color: #434a5a;
+  border: 3px solid rgb(53, 53, 53);
+  border: 3px solid rgb(175, 175, 4);
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.invalid-imei__container h3 {
+  text-align: center;
+}
+
+.invalid-imei__container ul{ 
+  padding-left: 12px;
+  margin-top: 10px;
+  list-style: none;
+}
+
+.invalid-imei__container hr {
+  background-color: rgb(105, 105, 105);
+  border-color: rgb(53, 53, 53);
+  margin: 15px 0;
+  border-style: solid;
+  border-width: 1px;
 }

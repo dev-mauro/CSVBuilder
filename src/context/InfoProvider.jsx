@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { InfoContext } from "./InfoContext";
 
 import extractImeiInfo from "../utils/extractImeiInfo";
@@ -41,7 +41,18 @@ export const InfoProvider = ({children}) => {
   // { model: "", imeiList: [ 13123,123123, 123123 ], saved: false, selected: false}
   const [devices, setDevices] = useState([]);
 
+  // Lista de IMEI inválidos. Array de strings.
   const [invalidIMEI, setInvalidIMEI] = useState([]);
+
+
+  // Estado de visibilidad del componente de administración de certificados
+  const [ manageCertsVisible, setManageCertsVisible ] = useState( false );
+
+  // Cambia el estado de visibilidad del componente de administración de certificados
+  const toggleManageCerts = () => {
+    setManageCertsVisible( !manageCertsVisible );
+  }
+
 
   // Estado del input para poner nombre al archivo 
   const { onInputChange, fileName, setFormState } = useForm();
@@ -75,6 +86,7 @@ export const InfoProvider = ({children}) => {
 
   const value = {
     user, setUser, onLogIn, onLogOut,
+    manageCertsVisible, toggleManageCerts,
     imei, onSetImei,
     devices, setDevices,
     onSelectedChange,

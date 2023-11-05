@@ -3,7 +3,8 @@ const listItemStyle = {
 }
 
 const spanStyle = {
-  fontWeight: 'bold',
+  fontSize: '14px',
+  color: 'rgb(209, 209, 209)'
 }
 
 export const InvalidIMEI = ({device}) => {

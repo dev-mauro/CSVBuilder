@@ -9,6 +9,7 @@ import { PrivateComponents } from './components/PrivateComponents';
 import { checkAllowedEmail } from './helpers/checkAllowedEmail';
 import { LogOutButton } from './components/LogOutButton';
 import { AUTH } from './utils/constants';
+import { CertsManage } from './components/CertsManage';
 
 
 function App() {
@@ -23,12 +24,14 @@ function App() {
 
   return (
     <div className="app">
-      <AuthButton user={ user }/>
+      <AuthButton user={ user } authorized={ authorized }/>
       <ImeiTextArea />
       <InvalidImeiContainer/>
       <ResultContainer />
       <SaveDevices/>
       
+      { ( authorized ) ? <CertsManage /> : '' }
+
       <div className="footer">
         { ( user.authState === AUTH.authenticated ) ? <LogOutButton/> : '' }
         { ( authorized ) ? <PrivateComponents/> : '' }
