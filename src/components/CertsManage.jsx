@@ -28,7 +28,7 @@ export const CertsManage = () => {
 
         <button
           onClick={ toggleManageCerts }
-          class="close-button"
+          className="close-button"
         >
           x
         </button>

@@ -6,15 +6,37 @@ import { useForm } from "../hook/useForm";
 import setSortedDevices from "../utils/setSavedDevices";
 import { sortSavedDevices } from "../utils/sortDevices";
 
+// Obtiene el estado de la propiedad fixedStatus del localStorage
+const getFixedStatus = () => {
+  const localFixedStatus = localStorage.getItem('fixedStatus') || true;
+
+  if( localFixedStatus === 'true' || localFixedStatus == true )
+    return true;
+
+  else return false
+}
+
+// Guarda el estado de la propiedad fixedStatus del localStorage
+const setFixedStatus = ( status ) => {
+  localStorage.setItem('fixedStatus', status);
+}
+
 export const SaveDevices = ( ) => {
   const { devices, setDevices, onInputChange, fileName } = useContext(InfoContext);
   const download = useDownload('.csv');
 
-  const [ fixed, setFixed ] = useState( false );
+  // Estado que controla si el input esta fijo (true) o no (false)
+  const [ fixed, setFixed ] = useState( () => getFixedStatus() );
 
+  // Estado que controla si se intento guardar un archivo sin nombre
   const [ noNameFileTry, setNoNameFileTry ] = useState( false );
 
   const input = useRef();
+
+  const onToggleFixedButtonClick = () => {
+    setFixedStatus( !fixed )
+    setFixed( !fixed );
+  } 
 
   const onButtonClick = () => {
     if( fileName === undefined ) {
@@ -57,8 +79,9 @@ export const SaveDevices = ( ) => {
 
       <form action="" onSubmit={onFormSubmit}>
         <button
+          type="button"
           className="toggle-fixed-button"
-          onClick={() => setFixed( !fixed )}
+          onClick={ onToggleFixedButtonClick }
         >
           { (fixed) ? '🔻' : '🔺' }
         </button>
@@ -76,6 +99,7 @@ export const SaveDevices = ( ) => {
         />
 
         <button
+          type="submit"
           className="save-button"
           onClick={ onButtonClick }
         >
