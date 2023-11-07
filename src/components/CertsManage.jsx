@@ -1,6 +1,9 @@
 import { useContext, useRef } from "react";
 import { AddCert } from "./AddCert"
 import { InfoContext } from "../context/InfoContext";
+import { DownloadCertsButton } from "./DownloadCertsButton";
+import { DownloadModelButton } from "./DownloadModelButton";
+import { DeleteCerts } from "./DeleteCerts";
 
 export const CertsManage = () => {
 
@@ -21,10 +24,16 @@ export const CertsManage = () => {
       <div className="cert-manage">
 
         <h2>Administrar certificados</h2>
+        <div class="download-buttons__container">
+          <DownloadCertsButton />
+          <DownloadModelButton />
+        </div>
 
         <AddCert/>
+        <DeleteCerts/>
 
         {/* <h3>Eliminar certificados</h3> */}
+
 
         <button
           onClick={ toggleManageCerts }

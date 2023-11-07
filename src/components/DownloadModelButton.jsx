@@ -19,7 +19,7 @@ export const DownloadModelButton = () => {
 
   return (
     <button
-      className="button"
+      className="button models-button"
       onClick={ onButtonClick }
     >
       Descargar modelos

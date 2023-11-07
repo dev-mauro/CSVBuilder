@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InfoContext } from "./InfoContext";
 
 import extractImeiInfo from "../utils/extractImeiInfo";
@@ -7,6 +7,7 @@ import { useForm } from "../hook/useForm";
 
 import { AUTH } from "../utils/constants";
 import { logoutUser, signInWithGoogle } from "../firebase";
+import { checkAllowedEmail } from "../helpers/checkAllowedEmail";
 
 export const InfoProvider = ({children}) => {
 
@@ -17,6 +18,15 @@ export const InfoProvider = ({children}) => {
     photoURL: null,
     displayName: null,
   });
+
+  // Usuario autorizado para administrar certificados
+  const [ authorized, setAuthorized ] = useState( false );
+
+  useEffect(() => {
+    if( user.authState === AUTH.authenticated )
+      checkAllowedEmail( user.email )
+        .then( authorized => setAuthorized( authorized ));
+  }, [ user ])
 
   // Acción LogIn con Google usando Firebase
   const onLogIn = async () => {
@@ -86,6 +96,7 @@ export const InfoProvider = ({children}) => {
 
   const value = {
     user, setUser, onLogIn, onLogOut,
+    authorized,
     manageCertsVisible, toggleManageCerts,
     imei, onSetImei,
     devices, setDevices,

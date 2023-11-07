@@ -11,6 +11,25 @@ body {
   position: relative;
 }
 
+::selection {
+  background-color: white;
+  color: black;
+}
+
+::-moz-selection {
+  background-color: red;
+}
+
+*::-webkit-scrollbar {
+  background-color: #434a5a;
+  width: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 10px;
+}
+
 .app {
   min-height: 100vh;
   max-width: 1100px;
@@ -129,10 +148,6 @@ body {
   border: 2px solid #66718a;
 }
 
-.save-devices input::selection {
-  background-color: black;
-}
-
 .save-devices button {
   height: 25px;
   background-color: #434a5a;
@@ -193,7 +208,7 @@ body {
   align-items: center;
   gap: 10px;
   width: 500px;
-  margin: 0 auto;
+  margin: 10px auto 0;
 }
 
 
@@ -220,7 +235,6 @@ body {
   padding: 5px 10px;
   border: none;
   border-bottom: 1px solid #76829e;
-  margin-bottom: 10px;
 }
 
 .adm-certs__button:hover {
@@ -250,19 +264,25 @@ body {
 .cert-manage {
   width: 100%;
   max-width: 1000px;
+  max-height: 98vh;
+  overflow-y: auto;
   background-color: #23262e;
   padding: 20px;
   border-radius: 5px;
   position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .cert-manage h2 {
   /* margin-bottom: 20px; */
+  width: 100%;
   text-align: center;
 }
 
 .cert-manage h3 {
-  margin: 20px 0 0px;
+  margin: 5px 0 0px;
   font-weight: normal;
   color: rgb(182, 182, 182);
 }
@@ -289,7 +309,13 @@ body {
   border: 1px solid #434a5a;
 }
 
+.download-buttons__container {
+  width: 100%;
+}
+
 .add-cert__container {
+  width: 50%;
+  min-width: 300px;
   padding: 20px 10px;
 }
 
@@ -362,4 +388,88 @@ body {
   margin: 15px 0;
   border-style: solid;
   border-width: 1px;
+}
+
+.models-button, .certs-button {
+  margin: 5px;
+}
+
+.delete-certs__wrapper {
+  padding: 20px 10px;
+}
+
+.delete-certs__wrapper h3 {
+  margin-bottom: 10px;
+  
+}
+
+.delete-certs__container {
+  height: 400px;
+  overflow-y: auto;
+  width: 430px;
+  margin-bottom: 10px;
+  box-shadow: 0px 0px 10px 10px rgb(32, 32, 32);
+  
+}
+
+.cert-listItem {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  height: fit-content;
+  margin-bottom: 2px;
+}
+
+.cert-listItem div {
+  padding: 5px 10px;
+  display: grid;
+  height: 40px;
+  align-items: center;
+  border: 1px solid gray;
+  text-align: left;
+}
+
+.cert-model__item {
+  width: 150px;
+  position: relative;
+}
+
+.cert-modelabr__item {
+  width: 100px;
+}
+
+.cert-number__item {
+  width: 150px;
+}
+
+.cert-listItem .cert-listItem__tip {
+  display: none;
+  position: absolute;
+  background-color: #0a0b0e;
+  min-width: 150px;
+  width: max-content;
+  border-radius: 5px;
+  border-color: transparent;
+}
+
+.cert-model__item:hover .cert-listItem__tip {
+  display: grid;
+  align-items: center;
+  cursor: pointer;
+}
+
+.remove-cert__button {
+  height: 40px;
+  width: 35px;
+  background-color: #0a0b0e;
+  color: white;
+  border: 1px solid rgb(105, 105, 105);
+  border-radius: 5px;
+  transition: border-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+
+.remove-cert__button:hover {
+  cursor: pointer;
+  border-color: red;
+  color: red;
 }

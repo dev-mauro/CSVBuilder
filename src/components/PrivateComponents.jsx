@@ -1,13 +1,12 @@
-import { DisplayFilesName } from "./DisplayFilesName"
-import { DownloadCertsButton } from "./DownloadCertsButton"
-import { DownloadModelButton } from "./DownloadModelButton"
+import { useContext } from "react";
+import { InfoContext } from "../context/InfoContext";
 
-export const PrivateComponents = () => {
-  return (
-    <div className="private-components">
-      <DownloadCertsButton/>
-      <DownloadModelButton/>
-      <DisplayFilesName/>
-    </div>
-  )
+export const PrivateComponents = ({ children }) => {
+
+  const { authorized } = useContext( InfoContext );
+
+  if( authorized )
+    return <>{ children }</>
+
+  return;
 }
