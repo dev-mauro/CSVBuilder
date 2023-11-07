@@ -13,6 +13,11 @@ export const CertListItem = ({ info, onRemove, allowRemove }) => {
   const { numero, modelo, modelo_abr } = info;
 
   const onRemoveClick = () => {
+    const userConfirm = confirm(`¿Eliminar el certificado ${modelo_abr}?`);
+
+    if ( !userConfirm )
+      return;
+
     deleteCert( numero );
     onRemove();
   }
