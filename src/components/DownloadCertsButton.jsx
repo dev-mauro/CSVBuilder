@@ -19,7 +19,7 @@ export const DownloadCertsButton = () => {
 
   return (
     <button
-      className="button"
+      className="button certs-button"
       onClick={ onButtonClick }
     >
       Descargar certificados

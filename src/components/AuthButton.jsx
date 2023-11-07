@@ -3,13 +3,16 @@ import { LogInButton } from './LogInButton'
 import { AUTH } from '../utils/constants'
 import { UserBadge } from './UserBadge'
 import { ManageCertsButton } from './ManageCertsButton'
+import { PrivateComponents } from './PrivateComponents'
 
 export const AuthButton = ({ user, authorized }) => {
   if ( user.authState === AUTH.authenticated )
     return (
       <>
         <UserBadge user={ user }/>
-        { ( authorized ) ? <ManageCertsButton /> : '' }
+        <PrivateComponents>
+          <ManageCertsButton />
+        </PrivateComponents>
       </>
     )
 

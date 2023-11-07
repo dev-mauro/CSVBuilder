@@ -5,36 +5,33 @@ import { InvalidImeiContainer } from './components/InvalidImeiContainer';
 import { useEffect, useState } from 'react';
 import { useCheckCredentials } from './hook/useCheckCredentials';
 import { AuthButton } from './components/AuthButton';
-import { PrivateComponents } from './components/PrivateComponents';
 import { checkAllowedEmail } from './helpers/checkAllowedEmail';
 import { LogOutButton } from './components/LogOutButton';
 import { AUTH } from './utils/constants';
 import { CertsManage } from './components/CertsManage';
+import { PrivateComponents } from './components/PrivateComponents';
+import { DisplayFilesName } from './components/DisplayFilesName';
 
 
 function App() {
 
   const { user } = useCheckCredentials();
-  const [ authorized, setAuthorized ] = useState( false );
-
-  useEffect(() => {
-    checkAllowedEmail( user.email )
-      .then( authorized => setAuthorized( authorized ));
-  }, [ user ])
 
   return (
     <div className="app">
-      <AuthButton user={ user } authorized={ authorized }/>
+      <AuthButton user={ user }/>
       <ImeiTextArea />
       <InvalidImeiContainer/>
       <ResultContainer />
       <SaveDevices/>
       
-      { ( authorized ) ? <CertsManage /> : '' }
+      <PrivateComponents>
+        <CertsManage />
+        <DisplayFilesName />
+      </PrivateComponents>
 
       <div className="footer">
         { ( user.authState === AUTH.authenticated ) ? <LogOutButton/> : '' }
-        { ( authorized ) ? <PrivateComponents/> : '' }
       </div>
     </div>
   )
