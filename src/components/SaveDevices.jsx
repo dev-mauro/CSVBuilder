@@ -50,9 +50,43 @@ export const SaveDevices = ( ) => {
     if(selectedDevices.length == 0) return;
 
     // Genera un unico objeto con todos los IMEI de los dispositivos seleccionados
-    const unifiedList = selectedDevices
-      .map(device => device.imeiList)
-      .flat(1);
+    let unifiedList = [];
+    // guarda la cantidad de imeis que tiene un dispositivo basado en su SN, para evitar recalcularlo
+    const imeisNumberCache = [];
+    
+    for( let device of selectedDevices ) {
+      for ( let e in device.imeiList ) {
+        // Calcula cuántos imei tiene el dispositivo, basado en su SN
+        const currentSn = device.sn[e];
+        let imeisNumber = imeisNumberCache.find( i => i[0] == currentSn ) || null;
+
+        let snIsCached = ( imeisNumber != null ) ? true : false;
+        // Si el numero de IMEIs no está en el cache, lo calcula y lo guarda
+        if ( snIsCached ) {
+          imeisNumber = imeisNumber[1];
+        } else {
+          imeisNumber = 0;
+          for ( let j in device.sn )
+            if( device.sn[j] == currentSn ) imeisNumber += device.imeiList[j].length;
+          imeisNumberCache.push([currentSn, imeisNumber]);
+        }
+
+        const isDualSIM = (device.imeiList[e].length == 2) ? true : false;
+        if ( isDualSIM ) {
+          unifiedList.push(
+            `${device.imeiList[e][0]};${device.sn[e]};${imeisNumber}`
+          );
+          unifiedList.push(
+            `${device.imeiList[e][1]};${device.sn[e]};${imeisNumber}`
+          );
+        } else {
+          unifiedList.push(
+            `${device.imeiList[e][0]};${device.sn[e]};${imeisNumber}`
+          );
+        }
+      }
+    }
+
 
     //Descarga el archivo
     download(unifiedList, fileName);

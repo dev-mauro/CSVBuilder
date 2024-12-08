@@ -6,6 +6,7 @@ import './table.css'
 
 
 const createString = (popupInfo) => {
+  popupInfo = popupInfo.flat(1);
   return popupInfo.map(info => <tr> <td>{info}</td> </tr>);
 }
 
