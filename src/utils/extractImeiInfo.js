@@ -156,14 +156,14 @@ const detectInfoStructure = (deviceArray) => {
 
   if ( deviceArray.length == 5 ) {
     // Verificamos si el primer dato es un IMEI.
-    // En ese caso -> IMEI1, IMEI2, SN, Modelo, Marca
+    // En ese caso -> IMEI1, IMEI2, Modelo, Marca, SN
     if (isNumber(deviceArray[0].replaceAll(' ', '')))
       return {
         imei1: deviceArray[0],
         imei2: deviceArray[1],
-        sn: deviceArray[2],
-        model: deviceArray[3],
-        brand: deviceArray[4],
+        model: deviceArray[2],
+        brand: deviceArray[3],
+        sn: deviceArray[4].replace(/ /g, ''),
       }
 
     // En caso contrario -> Marca, Modelo, IMEI1, IMEI2, SN
@@ -172,17 +172,17 @@ const detectInfoStructure = (deviceArray) => {
       model: deviceArray[1],
       imei1: deviceArray[2],
       imei2: deviceArray[3],
-      sn: deviceArray[4],
+      sn: deviceArray[4].replace(/ /g, ''),
     }
     
   } else if ( deviceArray.length == 4 ) {
-    // En ese caso -> IMEI1, IMEI2, SN, Modelo
+    // En ese caso -> IMEI1, IMEI2, Modelo, SN
     if (isNumber(deviceArray[0].replaceAll(' ', '')))
       return {
         imei1: deviceArray[0],
         imei2: deviceArray[1],
-        sn: deviceArray[2],
-        model: deviceArray[3],
+        model: deviceArray[2],
+        sn: deviceArray[3].replace(/ /g, ''),
         brand: null,
       }
 
@@ -191,7 +191,7 @@ const detectInfoStructure = (deviceArray) => {
       model: deviceArray[0],
       imei1: deviceArray[1],
       imei2: deviceArray[2],
-      sn: deviceArray[3],
+      sn: deviceArray[3].replace(/ /g, ''),
       brand: null,
     }
 
