@@ -11,6 +11,10 @@ export const InvalidIMEI = ({device}) => {
   const {imei, model} = device;
   const imeiLength = ('' + imei).length;
 
+  const errorMessage = imeiLength < 15
+    ? `${imeiLength} dígitos`
+    : 'duplicado'
+
   return (
     <>
       <li style={listItemStyle}>
@@ -19,7 +23,7 @@ export const InvalidIMEI = ({device}) => {
       }
         <span style={spanStyle}>
         {
-          `(${imeiLength} dígitos)`  
+          `(${errorMessage})`  
         }
         </span>
       </li>

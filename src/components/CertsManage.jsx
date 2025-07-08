@@ -4,6 +4,7 @@ import { InfoContext } from "../context/InfoContext";
 import { DownloadCertsButton } from "./DownloadCertsButton";
 import { DownloadModelButton } from "./DownloadModelButton";
 import { DeleteCerts } from "./DeleteCerts";
+import { LogOutButton } from "./LogOutButton";
 
 export const CertsManage = () => {
 
@@ -27,6 +28,7 @@ export const CertsManage = () => {
         <div class="download-buttons__container">
           <DownloadCertsButton />
           <DownloadModelButton />
+          <LogOutButton/>
         </div>
 
         <AddCert/>

@@ -13,6 +13,8 @@ const extractImeiInfo = (info) => {
 const buildDeviceInfoArray = (info) => {
   const validIMEI = [];
   const invalidIMEI = [];
+  // Array para almacenar los imeis ya procesados y evitar duplicados
+  const processedImeis = [];
 
   info = info.replaceAll('-', '');
 
@@ -25,11 +27,25 @@ const buildDeviceInfoArray = (info) => {
 
     let {imei1, imei2, sn, model, brand} = detectInfoStructure(deviceInfo);
 
+    if ( brand )
+      model = brand + " - " + model;
+
     imei1 = removeWhiteSpaces(imei1);
     imei2 = removeWhiteSpaces(imei2);
 
-    if ( brand )
-      model = brand + " - " + model;
+    if( processedImeis.includes(imei1) && imei1.length != 0 ) {
+      invalidIMEI.push({imei: imei1, model});
+      imei1 = "";
+    } else {
+      processedImeis.push(imei1);
+    }
+    
+    if( processedImeis.includes(imei2) && imei2.length != 0 ) {
+      invalidIMEI.push({imei: imei2, model});
+      imei2 = "";
+    } else {
+      processedImeis.push(imei2);
+    }
 
     const imeiList = [];
     

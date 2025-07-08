@@ -3,7 +3,7 @@ import { InfoContext } from "../context/InfoContext"
 
 
 
-export const ImeiTextArea = memo(() => {
+export const ImeiTextArea = memo(({ value, onChange }) => {
   const { onSetImei } = useContext( InfoContext );
   const textRef = createRef();
 
@@ -21,6 +21,10 @@ export const ImeiTextArea = memo(() => {
         type="text"
         className="imei-input"
         autoCapitalize="none"
+        value={ value }
+        onChange={ onChange }
+        name="textAreaValue"
+        placeholder="Ingrese los imeis a revisar..."
       />
       <button
       className="button"
